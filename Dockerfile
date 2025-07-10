@@ -7,7 +7,8 @@ RUN npm install
 
 COPY . .
 
-RUN npx prisma generate
+RUN npm run prisma:generate
+RUN npm run prisma:deploy
 RUN npm run build
 
 EXPOSE 3000
