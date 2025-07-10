@@ -1,12 +1,14 @@
-import { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import { RequestHandler } from 'express';
+import { getUserById } from '../services/user.service';
 
-export async function getMe(req: Request, res: Response) {
+export const getMe: RequestHandler = async (req, res) => {
   const userId = (req.user as any).id;
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: { id: true, email: true },
-  });
+
+  const user = await getUserById(userId);
+  if (!user) {
+    res.status(404).json({ error: 'User not found' })
+    return;
+  };
+
   res.json(user);
-}
+};

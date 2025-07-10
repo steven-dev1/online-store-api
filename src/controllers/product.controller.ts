@@ -1,15 +1,16 @@
-import { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import { Request, RequestHandler, Response } from 'express';
+import { getAllProducts, getProductById } from '../services/product.service';
 
-export async function getProducts(req: Request, res: Response) {
-  const products = await prisma.product.findMany();
+export const getProducts = async (req: Request, res: Response) => {
+  const products = await getAllProducts();
   res.json(products);
-}
+};
 
-export async function getProductById(req: Request, res: Response) {
-  const { id } = req.params;
-  const product = await prisma.product.findUnique({ where: { id: Number(id) } });
-  if (!product) return res.status(404).json({ error: 'Not found' });
+export const getProduct: RequestHandler = async (req, res) => {
+  const product = await getProductById(req.params.id);
+  if (!product) {
+    res.status(404).json({ error: 'Product not found' })
+    return;
+  };
   res.json(product);
-}
+};
