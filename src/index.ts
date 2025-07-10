@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { swaggerDocs, swaggerUiHandler } from './utils/swagger';
 
 import authRoutes from './routes/auth.routes';
 import productRoutes from './routes/product.routes';
@@ -17,6 +18,8 @@ app.use('/auth', authRoutes);
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
 app.use('/me', userRoutes);
+app.use('/docs', swaggerUiHandler, swaggerDocs);
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

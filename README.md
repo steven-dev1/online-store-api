@@ -13,6 +13,7 @@ Una RESTful API para una tienda en línea construida con **Node.js**, **Express*
 - JWT para autenticación
 - Jest para testing
 - Docker para contenerización
+- Swagger (OpenAPI) para documentación de API
 
 ---
 
@@ -100,27 +101,27 @@ docker run -p 3000:3000 --env-file .env online-store-api
 ## 📚 Endpoints principales
 
 ### 🧑 Auth
-| Método | Ruta           | Descripción              |
-|--------|----------------|--------------------------|
-| POST   | `/auth/register` | Registro de usuario     |
-| POST   | `/auth/login`    | Login y retorno de token JWT |
+| Método | Ruta             | Descripción                    |
+|--------|------------------|--------------------------------|
+| POST   | `/auth/register` | Registro de usuario            |
+| POST   | `/auth/login`    | Login y retorno de token JWT   |
 
 ### 🛒 Products
-| Método | Ruta             | Descripción              |
-|--------|------------------|--------------------------|
-| GET    | `/products`       | Obtener todos los productos |
-| GET    | `/products/:id`   | Obtener un producto específico |
+| Método | Ruta             | Descripción                      |
+|--------|------------------|----------------------------------|
+| GET    | `/products`      | Obtener todos los productos      |
+| GET    | `/products/:id`  | Obtener un producto específico   |
 
 ### 📦 Orders (requiere autenticación)
-| Método | Ruta         | Descripción                 |
-|--------|--------------|-----------------------------|
-| POST   | `/orders`    | Crear orden para el usuario |
-| GET    | `/orders`    | Ver órdenes del usuario     |
+| Método | Ruta         | Descripción                       |
+|--------|--------------|-----------------------------------|
+| POST   | `/orders`    | Crear orden para el usuario       |
+| GET    | `/orders`    | Ver órdenes del usuario           |
 
 ### 👤 User (requiere autenticación)
-| Método | Ruta         | Descripción                 |
-|--------|--------------|-----------------------------|
-| GET    | `/me`        | Obtener información del usuario autenticado |
+| Método | Ruta         | Descripción                                   |
+|--------|--------------|-----------------------------------------------|
+| GET    | `/me`        | Obtener información del usuario autenticado   |
 
 ---
 
@@ -164,4 +165,31 @@ src/
 ```
 
 ---
+
+## 📖 Documentación Swagger
+
+La documentación interactiva de la API está disponible en:
+
+```
+http://localhost:3000/docs
+```
+
+### 🔧 Configuración
+
+La documentación se genera con `swagger-jsdoc` y `swagger-ui-express`. Está configurada en `src/utils/swagger.ts` y montada en `index.ts`.
+
+### 🛡️ Autenticación con Swagger
+
+Para acceder a rutas protegidas desde Swagger:
+
+1. Haz login en `/auth/login`
+2. Copia el token JWT retornado
+3. Haz clic en `Authorize` en la UI de Swagger
+4. Pega el token así:
+   ```
+   Bearer tu_token_aquí
+   ```
+
 ---
+
+✅

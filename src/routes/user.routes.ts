@@ -7,3 +7,18 @@ router.use(authenticate);
 router.get('/', getMe);
 
 export default router;
+
+/**
+ * @swagger
+ * /me:
+ *   get:
+ *     summary: Get authenticated user info
+ *     tags: [User]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: User data
+ *       404:
+ *         description: User not found
+ */
